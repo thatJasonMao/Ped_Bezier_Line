@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class BezierTestLogic : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
+    {
+        Debug.LogError("Test Start");
+    }
+
+    void FixUpdate()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    protected virtual void OnDrawGizmos()
+    { 
+    
     }
 }

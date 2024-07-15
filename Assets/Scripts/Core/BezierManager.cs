@@ -109,11 +109,14 @@ namespace BezierUtils
         /// 设置贝塞尔曲线控制点的接口
         /// </summary>
         /// <param name="v3_points"></param>
-        public void SetBezierSourcePoints(List<Vector3> v3_points)
+        public void SetBezierSourcePoints(List<Vector3> v3_points, int i_sampling, float f_offsetscale)
         {
             //暂时仅考虑三个点以上的case
             if (v3_points.Count > 3)
             {
+                Sampling = i_sampling;
+                OffsetScale = f_offsetscale;
+                
                 _sourcepoints?.Clear();
                 _sourcepoints = new List<BezierPoint>(v3_points.Count);
 
