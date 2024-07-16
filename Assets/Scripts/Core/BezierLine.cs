@@ -106,47 +106,6 @@ namespace BezierUtils
             return result;
         }
 
-        public static Quaternion GetRotationOnCubicCurve(float time, Vector3 up, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
-        {
-            Vector3 tangent = GetTangentOnCubicCurve(time, startPosition, endPosition, startTangent, endTangent);
-            Vector3 normal = GetNormalOnCubicCurve(time, up, startPosition, endPosition, startTangent, endTangent);
-
-            return Quaternion.LookRotation(tangent, normal);
-        }
-
-        public static Vector3 GetTangentOnCubicCurve(float time, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
-        {
-            float t = time;
-            float u = 1f - t;
-            float u2 = u * u;
-            float t2 = t * t;
-
-            Vector3 tangent =
-                (-u2) * startPosition +
-                (u * (u - 2f * t)) * startTangent -
-                (t * (t - 2f * u)) * endTangent +
-                (t2) * endPosition;
-
-            return tangent.normalized;
-        }
-
-        public static Vector3 GetBinormalOnCubicCurve(float time, Vector3 up, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
-        {
-            Vector3 tangent = GetTangentOnCubicCurve(time, startPosition, endPosition, startTangent, endTangent);
-            Vector3 binormal = Vector3.Cross(up, tangent);
-
-            return binormal.normalized;
-        }
-
-        public static Vector3 GetNormalOnCubicCurve(float time, Vector3 up, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
-        {
-            Vector3 tangent = GetTangentOnCubicCurve(time, startPosition, endPosition, startTangent, endTangent);
-            Vector3 binormal = GetBinormalOnCubicCurve(time, up, startPosition, endPosition, startTangent, endTangent);
-            Vector3 normal = Vector3.Cross(tangent, binormal);
-
-            return normal.normalized;
-        }
-
         public static float GetApproximateLengthOfCubicCurve(BezierPoint startPoint, BezierPoint endPoint, int sampling)
         {
             return GetApproximateLengthOfCubicCurve(startPoint.Position, endPoint.Position, startPoint.GetRightHandle, endPoint.GetLeftHandle, sampling);

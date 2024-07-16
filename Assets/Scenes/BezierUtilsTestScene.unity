@@ -167,6 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb27dd04544fe3478870abce5cb3ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FittingStrength: 1
+  ShakeScale: 0.1
+  ShakeSpeed: 2
+  FittingAccuracy: 50
+  isDynamicDebug: 0
 --- !u!1 &1016825483
 GameObject:
   m_ObjectHideFlags: 0

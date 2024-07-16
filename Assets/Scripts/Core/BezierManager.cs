@@ -15,7 +15,6 @@ namespace BezierUtils
         /// </summary>
         public static BezierManager Instance
         {
-            //单例只暴露获取接口
             get
             {
                 if (instance != null)
