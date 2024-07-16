@@ -35,75 +35,6 @@ namespace BezierUtils
             return BezierLine.GetPointOnCubicCurve(timeRelativeToSegment, startPoint, endPoint);
         }
 
-        /*
-        /// <summary>
-        /// 不渲染线用不到
-        /// </summary>
-        /// <param name="time"></param>
-        /// <param name="up"></param>
-        /// <returns></returns>
-        public Quaternion GetRotation(float time, Vector3 up)
-        {
-            BezierPoint startPoint;
-            BezierPoint endPoint;
-            float timeRelativeToSegment;
-
-            GetCubicSegment(time, out startPoint, out endPoint, out timeRelativeToSegment);
-
-            return BezierLine.GetRotationOnCubicCurve(timeRelativeToSegment, up, startPoint, endPoint);
-        }
-
-        /// <summary>
-        /// 不渲染线用不到
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        public Vector3 GetTangent(float time)
-        {
-            BezierPoint startPoint;
-            BezierPoint endPoint;
-            float timeRelativeToSegment;
-
-            GetCubicSegment(time, out startPoint, out endPoint, out timeRelativeToSegment);
-
-            return BezierLine.GetTangentOnCubicCurve(timeRelativeToSegment, startPoint, endPoint);
-        }
-
-        /// <summary>
-        /// 不渲染线用不到
-        /// </summary>
-        /// <param name="time"></param>
-        /// <param name="up"></param>
-        /// <returns></returns>
-        public Vector3 GetBinormal(float time, Vector3 up)
-        {
-            BezierPoint startPoint;
-            BezierPoint endPoint;
-            float timeRelativeToSegment;
-
-            GetCubicSegment(time, out startPoint, out endPoint, out timeRelativeToSegment);
-
-            return BezierLine.GetBinormalOnCubicCurve(timeRelativeToSegment, up, startPoint, endPoint);
-        }
-
-        /// <summary>
-        /// 不渲染线用不到
-        /// </summary>
-        /// <param name="time"></param>
-        /// <param name="up"></param>
-        /// <returns></returns>
-        public Vector3 GetNormal(float time, Vector3 up)
-        {
-            BezierPoint startPoint;
-            BezierPoint endPoint;
-            float timeRelativeToSegment;
-
-            GetCubicSegment(time, out startPoint, out endPoint, out timeRelativeToSegment);
-
-            return BezierLine.GetNormalOnCubicCurve(timeRelativeToSegment, up, startPoint, endPoint);
-        }
-        */
-
         public float GetApproximateLength()
         {
             float length = 0;
@@ -175,13 +106,6 @@ namespace BezierUtils
             return result;
         }
 
-        /*
-        public static Quaternion GetRotationOnCubicCurve(float time, Vector3 up, BezierPoint startPoint, BezierPoint endPoint)
-        {
-            return GetRotationOnCubicCurve(time, up, startPoint.Position, endPoint.Position, startPoint.GetRightHandle, endPoint.GetLeftHandle);
-        }
-        */
-
         public static Quaternion GetRotationOnCubicCurve(float time, Vector3 up, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
         {
             Vector3 tangent = GetTangentOnCubicCurve(time, startPosition, endPosition, startTangent, endTangent);
@@ -189,13 +113,6 @@ namespace BezierUtils
 
             return Quaternion.LookRotation(tangent, normal);
         }
-
-        /*
-        public static Vector3 GetTangentOnCubicCurve(float time, BezierPoint startPoint, BezierPoint endPoint)
-        {
-            return GetTangentOnCubicCurve(time, startPoint.Position, endPoint.Position, startPoint.GetRightHandle, endPoint.GetLeftHandle);
-        }
-        */
 
         public static Vector3 GetTangentOnCubicCurve(float time, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
         {
@@ -213,13 +130,6 @@ namespace BezierUtils
             return tangent.normalized;
         }
 
-        /*
-        public static Vector3 GetBinormalOnCubicCurve(float time, Vector3 up, BezierPoint startPoint, BezierPoint endPoint)
-        {
-            return GetBinormalOnCubicCurve(time, up, startPoint.Position, endPoint.Position, startPoint.GetRightHandle, endPoint.GetLeftHandle);
-        }
-        */
-
         public static Vector3 GetBinormalOnCubicCurve(float time, Vector3 up, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
         {
             Vector3 tangent = GetTangentOnCubicCurve(time, startPosition, endPosition, startTangent, endTangent);
@@ -227,13 +137,6 @@ namespace BezierUtils
 
             return binormal.normalized;
         }
-
-        /*
-        public static Vector3 GetNormalOnCubicCurve(float time, Vector3 up, BezierPoint startPoint, BezierPoint endPoint)
-        {
-            return GetNormalOnCubicCurve(time, up, startPoint.Position, endPoint.Position, startPoint.GetRightHandle, endPoint.GetLeftHandle);
-        }
-        */
 
         public static Vector3 GetNormalOnCubicCurve(float time, Vector3 up, Vector3 startPosition, Vector3 endPosition, Vector3 startTangent, Vector3 endTangent)
         {
