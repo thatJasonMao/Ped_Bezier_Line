@@ -18,7 +18,7 @@ namespace BezierUtils
             //单例只暴露获取接口
             get
             {
-                if (instance == null)
+                if (instance != null)
                 {
                     return instance;
                 }
@@ -29,81 +29,20 @@ namespace BezierUtils
             }
         }
 
-        private int _sampling = 0;
-
         /// <summary>
         /// 曲线采样密度
         /// </summary>
-        public int Sampling
-        {
-            get
-            {
-                if (_sampling != 0)
-                {
-                    return _sampling;
-                }
-                else
-                { 
-                    return 5;
-                }
-            }
-
-            set
-            { 
-                _sampling = value;
-            }
-
-        }
-
-        private float _offsetscale;
+        public static int Sampling;
 
         /// <summary>
         /// 拟合偏移量
         /// </summary>
-        public float OffsetScale
-        {
-            get
-            {
-                if (_offsetscale != 0f)
-                {
-                    return _offsetscale;
-                }
-                else
-                {
-                    return 1.0f;
-                }
-            }
-
-            set
-            { 
-                _offsetscale = value;
-            }
-        }
-
-        private List<BezierPoint> _sourcepoints;
+        public static float OffsetScale;
 
         /// <summary>
         /// 贝塞尔曲线控制点集合
         /// </summary>
-        public List<BezierPoint> SourcePoints
-        {
-            get
-            {
-                if (_sourcepoints != null)
-                {
-                    return _sourcepoints;
-                }
-                else
-                {
-                    return new List<BezierPoint>();
-                }
-            }
-
-            set
-            {
-                _sourcepoints = value;
-            }
-        }
+        public static List<BezierPoint> SourcePoints;
 
         /// <summary>
         /// 设置贝塞尔曲线控制点的接口
@@ -116,9 +55,8 @@ namespace BezierUtils
             {
                 Sampling = i_sampling;
                 OffsetScale = f_offsetscale;
-                
-                _sourcepoints?.Clear();
-                _sourcepoints = new List<BezierPoint>(v3_points.Count);
+
+                SourcePoints = new List<BezierPoint>(v3_points.Count);
 
                 for (int i = 0; i < v3_points.Count; i++)
                 { 
@@ -151,7 +89,7 @@ namespace BezierUtils
                         new_bp.PreviousPosition = v3_points[i - 1];
                     }
 
-                    _sourcepoints.Add(new_bp);
+                    SourcePoints.Add(new_bp);
                 }
             }
         }
@@ -167,7 +105,17 @@ namespace BezierUtils
         /// <returns></returns>
         public List<Vector3> GenerateBezierCurvePoints()
         {
-            return new List<Vector3>();
+            List<Vector3> results = new List<Vector3>();
+
+            for (int i = 0; i < Sampling + 1; i++)
+            {
+                float time = i / (float)Sampling;
+
+                Vector3 CurvePoint = BezierLine.Instance.GetPoint(time);
+                results.Add(CurvePoint);
+            }
+
+            return results;
         }
 
         public int GetBezierPointCount()

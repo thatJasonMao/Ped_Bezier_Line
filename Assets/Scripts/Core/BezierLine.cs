@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BezierUtils
 {
@@ -9,6 +7,23 @@ namespace BezierUtils
     /// </summary>
     public class BezierLine
     {
+        private static BezierLine instance;
+
+        public static BezierLine Instance
+        {
+            get
+            {
+                if (instance != null)
+                {
+                    return instance;
+                }
+                else
+                { 
+                    return new BezierLine();
+                }
+            }
+        }
+        
         public Vector3 GetPoint(float time)
         {
             BezierPoint startPoint;
@@ -92,10 +107,10 @@ namespace BezierUtils
         public float GetApproximateLength()
         {
             float length = 0;
-            int subCurveSampling = (BezierManager.Instance.Sampling / (BezierManager.Instance.GetBezierPointCount() - 1)) + 1;
+            int subCurveSampling = (BezierManager.Sampling / (BezierManager.Instance.GetBezierPointCount() - 1)) + 1;
             for (int i = 0; i < BezierManager.Instance.GetBezierPointCount() - 1; i++)
             {
-                length += BezierLine.GetApproximateLengthOfCubicCurve(BezierManager.Instance.SourcePoints[i], BezierManager.Instance.SourcePoints[i + 1], subCurveSampling);
+                length += BezierLine.GetApproximateLengthOfCubicCurve(BezierManager.SourcePoints[i], BezierManager.SourcePoints[i + 1], subCurveSampling);
             }
 
             return length;
@@ -110,15 +125,15 @@ namespace BezierUtils
             float subCurvePercent = 0f;
             float totalPercent = 0f;
             float approximateLength = this.GetApproximateLength();
-            int subCurveSampling = (BezierManager.Instance.Sampling / (BezierManager.Instance.GetBezierPointCount() - 1)) + 1;
+            int subCurveSampling = (BezierManager.Sampling / (BezierManager.Instance.GetBezierPointCount() - 1)) + 1;
 
             for (int i = 0; i < BezierManager.Instance.GetBezierPointCount() - 1; i++)
             {
-                subCurvePercent = BezierLine.GetApproximateLengthOfCubicCurve(BezierManager.Instance.SourcePoints[i], BezierManager.Instance.SourcePoints[i + 1], subCurveSampling) / approximateLength;
+                subCurvePercent = BezierLine.GetApproximateLengthOfCubicCurve(BezierManager.SourcePoints[i], BezierManager.SourcePoints[i + 1], subCurveSampling) / approximateLength;
                 if (subCurvePercent + totalPercent > time)
                 {
-                    startPoint = BezierManager.Instance.SourcePoints[i];
-                    endPoint = BezierManager.Instance.SourcePoints[i + 1];
+                    startPoint = BezierManager.SourcePoints[i];
+                    endPoint = BezierManager.SourcePoints[i + 1];
 
                     break;
                 }
@@ -128,8 +143,8 @@ namespace BezierUtils
 
             if (endPoint == null)
             {
-                startPoint = BezierManager.Instance.SourcePoints[BezierManager.Instance.GetBezierPointCount() - 2];
-                endPoint = BezierManager.Instance.SourcePoints[BezierManager.Instance.GetBezierPointCount() - 1];
+                startPoint = BezierManager.SourcePoints[BezierManager.Instance.GetBezierPointCount() - 2];
+                endPoint = BezierManager.SourcePoints[BezierManager.Instance.GetBezierPointCount() - 1];
 
                 totalPercent -= subCurvePercent;
             }
